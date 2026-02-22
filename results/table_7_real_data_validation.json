@@ -1,0 +1,29 @@
+[
+  {
+    "domain": "synthetic_power_grid",
+    "num_samples": 400,
+    "num_sensors": 5,
+    "training_time": 1.4691362380981445,
+    "train_accuracy": 0.9982142857142857,
+    "converged": true,
+    "final_val_loss": 9.854648804388998e-08
+  },
+  {
+    "domain": "swat_real",
+    "num_samples": 796,
+    "num_sensors": 51,
+    "training_time": 14.54050898551941,
+    "train_accuracy": 0.7553956834532374,
+    "converged": false,
+    "final_val_loss": 1.0364397388546407
+  },
+  {
+    "domain": "ai_solar_grid",
+    "num_samples": 198,
+    "num_sensors": 51,
+    "training_time": 4.14565110206604,
+    "train_accuracy": 1.0,
+    "converged": false,
+    "final_val_loss": 40.884549649556476
+  }
+]
