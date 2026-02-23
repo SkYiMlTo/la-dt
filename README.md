@@ -54,7 +54,7 @@ DigitalTwin/
 │   │   ├── gat_model.py         # Graph Attention Network
 │   │   └── lstm_model.py        # LSTM anomaly detection
 │   ├── training/                # Training scripts and experiments
-│   │   ├── phase_5_real_data_validation.py  # ← Real-world evaluation
+│   │   ├── swat_detection_validation.py     # ← Real-world evaluation
 │   │   ├── gat_training_script.py
 │   │   └── other_experiments.py
 │   ├── attribution/             # Attribution engine
@@ -112,9 +112,9 @@ ls -lh src/data/raw/
 # Expected: swat/, ai-data/, bearings/
 ```
 
-#### 3. Run Phase 5 real-world validation
+#### 3. Run SWAT detection validation
 ```bash
-python src/training/phase_5_real_data_validation.py
+python src/training/swat_detection_validation.py
 ```
 
 Expected output includes Table 7 results saved to `results/table_7_real_data_validation.json`
@@ -130,8 +130,8 @@ jupyter notebook notebooks/
 
 ### Real-World Validation (Table 7)
 ```bash
-# Run Phase 5 with real SWAT and grid data
-python src/training/phase_5_real_data_validation.py
+# Run SWAT detection validation with real SWAT and grid data
+python src/training/swat_detection_validation.py
 
 # Results saved to:
 # - results/table_7_real_data_validation.md

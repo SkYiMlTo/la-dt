@@ -1,0 +1,203 @@
+\section*{Appendix C: Implementation Details and Complexity Analysis}
+\label{app:implementation}
+
+This appendix provides implementation specifics for reproducibility and details the computational complexity of LA-DT components.
+
+\subsection*{C.1 LSTM Anomaly Trigger: Detailed Architecture}
+
+\begin{table}[h]
+\centering
+\caption{LSTM Model Architecture}
+\begin{tabular}{llccc}
+\toprule
+Layer & Type & Input & Output & Parameters \\
+\midrule
+1 & LSTM & (20, 63) & (None, 128) & 98,304 \\
+2 & Dropout & (None, 128) & (None, 128) & 0 \\
+3 & LSTM & (None, 128) & (None, 64) & 49,152 \\
+4 & Dense & (None, 64) & (None, 32) & 2,080 \\
+5 & Dense & (None, 32) & (None, 1) & 33 \\
+   & Sigmoid & (None, 1) & (None, 1) & 0 \\
+\midrule
+   & Total & & & 149,569 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent \textbf{Input Format:} 20-second windows (20 timesteps at 1 Hz), 63 engineered features:
+\begin{itemize}
+\item 25 raw sensor readings (5 nodes × 5 channels: temperature, humidity, accel xyz)
+\item 10 pairwise node differences ($\binom{5}{2}$ pairs)
+\item 25 temporal derivatives (5-step smoothed drift velocity)
+\item 3 multi-scale variances (5, 15, 30-minute rolling windows)
+\end{itemize}
+
+\noindent \textbf{Training:} Binary cross-entropy loss, Adam optimizer (lr=0.001), batch size 32, epoch 50 with early stopping (patience 10).
+
+\noindent \textbf{Inference:} ~2 ms per sample on CPU (suitable for edge deployment).
+
+---
+
+\subsection*{C.2 Graph Attention Network (GAT): Scalability Architecture}
+
+\begin{table}[h]
+\centering
+\caption{GAT Model for Sensor Networks}
+\begin{tabular}{llccc}
+\toprule
+Component & Role & Complexity & Input Size & Output Size \\
+\midrule
+Temporal Conv & Feature extraction & $O(T \cdot K)$ & (N, T, 1) & (N, d) \\
+GAT Layer 1 & Spatial reasoning & $O(N \cdot E)$ & (N, d) & (N, d') \\
+GAT Layer 2 & Message passing & $O(N \cdot E)$ & (N, d') & (N, d'') \\
+Classification & Decision head & $O(d'')$ & (N, d'') & (2,) \\
+\midrule
+Total & & $O(N + E)$ & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent \textbf{Comparison: LSTM vs GAT}
+
+\begin{table}[h]
+\centering
+\caption{Computational Complexity Comparison}
+\begin{tabular}{lccc}
+\toprule
+Component & LSTM & GAT & Speed-up \\
+\midrule
+Feature engineering & $O(N^2)$ (pairwise) & $O(N)$ (fixed graph) & $N$x \\
+Training (1 epoch) & $O(N^2 T)$ & $O(N \cdot E)$ & $N/E$x \\
+Inference (1 sample) & $O(N^2)$ & $O(N + E)$ & $N$x \\
+Memory (weights) & $O(N^2)$ & $O(N + E)$ & $N$x \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent For grid topologies ($E \approx 4N$ in practice due to sparse connectivity):
+\begin{align}
+\text{Speed-up} &= \frac{O(N^2)}{O(N + 4N)} = \frac{N^2}{5N} = \frac{N}{5}\\
+\text{For } N = 50: \quad \text{Speed-up} &\approx 10\text{x faster}
+\end{align}
+
+Empirical results (Table 6) confirm 2--7x speed-up across network sizes.
+
+---
+
+\subsection*{C.3 Multi-Horizon Attribution Engine: LLR Calibration}
+
+The LLR (Log-Likelihood Ratio) attribution combines three signals:
+
+\begin{equation}
+\Lambda = \sum_{k \in \{\text{VGR}, \text{SCD}, \text{PCV}\}} \Lambda_k = \sum_k \beta_k(x_k - \mu_k)
+\end{equation}
+
+Each $\Lambda_k$ is calibrated via logistic regression on validation data (Section 4.3.3):
+
+\noindent \textbf{Calibration Process:}
+\begin{enumerate}
+\item Split 3-month training data: 70\% normal, 30\% Byzantine attacks
+\item For each signal $x_k$ (VGR, SCD, PCV):
+   \begin{itemize}
+   \item Compute histogram of $x_k$ values under $H_N$ (natural drift)
+   \item Compute histogram of $x_k$ values under $H_B$ (Byzantine)
+   \item Fit logistic regression: $P(H_B) = \frac{1}{1 + e^{-\beta_k(x_k - \mu_k)}}$
+   \end{itemize}
+\item Extract $\beta_k$ (steepness) and $\mu_k$ (decision midpoint)
+\item Threshold: $\Lambda \geq 1.5$ → Byzantine (from cost-sensitive optimization)
+\end{enumerate}
+
+\noindent \textbf{Empirical Calibration Results:}
+
+\begin{table}[h]
+\centering
+\caption{LLR Signal Calibration on Validation Data}
+\begin{tabular}{lccc}
+\toprule
+Signal & $\mu_k$ & $\beta_k$ & Threshold \\
+\midrule
+VGR (5--30 min) & 2.1 & 0.42 & 3.0 \\
+SCD (30 min) & 0.35 & 1.85 & 0.5 \\
+PCV (60 min) & 0.2 & 2.1 & 0.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Thresholds were selected via 5-fold cross-validation minimizing asymmetric cost (missed attack: 100x weight vs false alarm: 1x weight), reflecting operational requirements for critical infrastructure.
+
+---
+
+\subsection*{C.4 Digital Twin Physics Models}
+
+\noindent \textbf{Temperature Evolution (Newton's Law of Cooling):}
+$$\hat{T}_{t+1} = \hat{T}_t + \alpha_{\mathrm{cool}}(T_{\mathrm{amb}} - \hat{T}_t) + \delta_{\mathrm{heating}}$$
+
+with $\alpha_{\mathrm{cool}} = 0.015$ (1/min), $\delta_{\mathrm{heating}} = 0.02$ °C (solar gain + internal dissipation).
+
+\noindent \textbf{Accelerometer Constraint (Gravity Check):}
+$$\sqrt{\hat{a}_x^2 + \hat{a}_y^2 + \hat{a}_z^2} = 9.81 \pm 0.02 \text{ m/s}^2 \quad \text{(static pylon)}$$
+
+Physical Constraint Violations (PCV) count timesteps exceeding this tolerance.
+
+\noindent \textbf{Multi-Sensor State:} CPS state $\mathbf{x}(t)$ evolves via coupled differential equations (power flow, water flow, chemical reactions). For brevity, we model via stochastic process:
+$$\mathbf{x}(t) = \mathbf{x}(t-1) + \mathcal{N}(0, \Sigma_{\mathrm{env}})$$
+
+where $\Sigma_{\mathrm{env}}$ is calibrated to match observed environmental drift statistics.
+
+---
+
+\subsection*{C.5 Time Acceleration for Simulation}
+
+\noindent Multi-horizon forecasting requires simulating future states at scales (5--60 min) much longer than operational latency permits. We use wallclock time acceleration:
+
+$$t_{\mathrm{sim}} = \alpha_{\mathrm{accel}} \cdot t_{\mathrm{wall}} = 120 \cdot t_{\mathrm{wall}}$$
+
+A 1-hour $(t_{\mathrm{sim}} = 60 \text{ min})$ forecast executes in $t_{\mathrm{wall}} = 30$ sec.
+
+\noindent \textbf{Implementation:} State evolution is time-independent (Markovian); we simply iterate the physics model $\alpha_{\mathrm{accel}} \times$ more times per wallclock second.
+
+---
+
+\subsection*{C.6 Reproducibility: Code References}
+
+Key source files (available at \url{https://github.com/SkYiMlTo/la-dt}):
+
+\begin{itemize}
+\item \textbf{LSTM Detector:} `src/models/lstm_model.py` (149,569 parameters)
+\item \textbf{GAT Detector:} `src/models/gat_model.py` (scalable to 50+ nodes)
+\item \textbf{LLR Attribution:} `src/app/attribution.py` (calibrated on validation data)
+\item \textbf{DT Simulator:} `src/app/detector.py` (Newton's law + constraint checking)
+\item \textbf{Multi-Horizon:} `src/training/phase_5_real_data_validation.py` (5, 10, 30, 60 min)
+\item \textbf{Data Loaders:} `src/data/real_dataset_loaders.py` (SWAT, AI Dataset, bearings)
+\item \textbf{Training Scripts:} `src/training/gat_training_script.py`, `transfer_learning_evaluation.py`
+\item \textbf{Experiments:} Full experimental pipeline containerized in `docker-compose.yml`
+\end{itemize}
+
+All code is open-source (MIT License), fully documented, and executable via provided Dockerfiles and `REPRODUCIBILITY.md` guide.
+
+---
+
+\subsection*{C.7 Key Hyperparameters and Tuning}
+
+\begin{table}[h]
+\centering
+\caption{Critical Hyperparameters and Sensitivity}
+\begin{tabular}{lcccc}
+\toprule
+Parameter & Value & Range Tested & Sensitivity & Impact \\
+\midrule
+LSTM hidden size & 128 & [64, 256] & Medium & F1 $\in [0.93, 0.95]$ \\
+LSTM dropout & 0.2 & [0, 0.5] & Low & F1 $\in [0.94, 0.94]$ \\
+LSTM threshold $\tau$ & 0.7 & [0.5, 0.9] & High & F1 $\in [0.82, 0.97]$ \\
+LLR threshold $\Lambda$ & 1.5 & [1.0, 2.0] & High & Accuracy $\in [85\%,  92\%]$ \\
+GAT heads & 4 & [2, 8] & Low & F1 $\in [0.87, 0.89]$ \\
+GAT layers & 2 & [1, 3] & Medium & F1 $\in [0.86, 0.89]$ \\
+Time accel $\alpha$ & 120 & [60, 240] & Low & Speed-up $\propto \alpha$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Hyperparameters were tuned on a held-out validation set (30\% of 3-month synthetic data) to avoid overfitting to test set.
+
+---
+

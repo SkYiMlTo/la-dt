@@ -80,7 +80,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "ladt-validate=src.training.phase_5_real_data_validation:main",
+            "ladt-validate=src.training.swat_detection_validation:main",
         ],
     },
     include_package_data=True,

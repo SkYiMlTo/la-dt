@@ -127,19 +127,19 @@ Checkpoint 2: All datasets verified
 
 ## Part 3: Generate Real-World Validation Results (10 min)
 
-### 3a. Run Phase 5: Real-World Multi-Domain Validation
+### 3a. Run SWAT Detection Validation
 
 This reproduces **Table 7** from the paper using actual SWAT and power grid data.
 
 ```bash
 # Run the validation script
-python src/training/phase_5_real_data_validation.py
+python src/training/swat_detection_validation.py
 ```
 
 **Expected output:**
 ```
 ================================================================================
-PHASE 5 (UPDATED): REAL-WORLD MULTI-DOMAIN VALIDATION
+SWAT DETECTION VALIDATION: REAL-WORLD MULTI-DOMAIN VALIDATION
 ================================================================================
 
 [Scenario 0] BASELINE: Synthetic Power Grid (5 sensors)
@@ -228,8 +228,6 @@ Checkpoint 3: Table 7 reproduced
 ---
 
 ## Part 4: Synthetic Baseline Validation (Option)
-
-Run specific synthetic experiments to validate the controlled baseline.
 
 ```bash
 python -c "
@@ -434,13 +432,13 @@ Verify that the Docker environment works:
 # Build Docker image
 docker build -f analysis/Dockerfile -t la-dt-analysis:latest .
 
-# Run Phase 5 in Docker
+# Run SWAT detection validation in Docker
 docker run --rm \
     -v $(pwd)/src:/app/src \
     -v $(pwd)/results:/app/results \
     -v $(pwd)/src/data/raw:/app/src/data/raw \
     la-dt-analysis:latest \
-    python src/training/phase_5_real_data_validation.py
+    python src/training/swat_detection_validation.py
 ```
 
 Expected: Same results as native Python execution
@@ -500,7 +498,7 @@ ls -R src/data/raw/
 ```
 
 ### Issue: "Memory error" during SWAT loading
-**Solution:** Reduce sample size in `phase_5_real_data_validation.py`
+**Solution:** Reduce sample size in `swat_detection_validation.py`
 ```python
 # Change max_samples from 20000 to 5000
 X_normal, y_normal = loader.load_csv(normal_path, max_samples=5000)
@@ -510,7 +508,7 @@ X_normal, y_normal = loader.load_csv(normal_path, max_samples=5000)
 **Solution:** Force CPU usage
 ```bash
 export CUDA_VISIBLE_DEVICES=""
-python src/training/phase_5_real_data_validation.py
+python src/training/swat_detection_validation.py
 ```
 
 ### Issue: "ImportError: py7zr"

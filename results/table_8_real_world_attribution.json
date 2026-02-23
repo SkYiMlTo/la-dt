@@ -1,0 +1,38 @@
+[
+  {
+    "horizon_minute": 5,
+    "accuracy": 20.0,
+    "correct": 2,
+    "total": 10,
+    "avg_vgr": 0.9998420656490025,
+    "avg_scd": 0.28549603400878265,
+    "avg_llr": 0.5709920680175653
+  },
+  {
+    "horizon_minute": 10,
+    "accuracy": 0.0,
+    "correct": 0,
+    "total": 10,
+    "avg_vgr": 0.9988282163263659,
+    "avg_scd": 0.08285754096775001,
+    "avg_llr": 0.16571508193550002
+  },
+  {
+    "horizon_minute": 30,
+    "accuracy": 10.0,
+    "correct": 1,
+    "total": 10,
+    "avg_vgr": 1.0030778417359667,
+    "avg_scd": 0.20338714473120842,
+    "avg_llr": 0.40677428946241684
+  },
+  {
+    "horizon_minute": 60,
+    "accuracy": 0.0,
+    "correct": 0,
+    "total": 10,
+    "avg_vgr": 1.0008786490590278,
+    "avg_scd": 0.05345213688923882,
+    "avg_llr": 0.10690427377847764
+  }
+]
