@@ -252,9 +252,9 @@ If you use LA-DT in your research, please cite:
 ## References
 
 Key datasets:
-- **SWAT:** [Dataset link](https://itrust.sutd.edu.sg/datasets/)
-- **AI Dataset:** [Synchrophasor data](https://www.nrel.gov/)
-- **IMS Bearings:** [NASA PHM Data Repository](https://www.nasa.gov/)
+- **SWAT:** [Dataset link](https://www.kaggle.com/datasets/vishala28/swat-dataset-secure-water-treatment-system)
+- **AI Dataset:** [Synchrophasor data](https://data.openei.org/submissions/8345)
+- **IMS Bearings:** [NASA PHM Data Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
 
 ## Support & Issues
 
