@@ -299,4 +299,4 @@ This repository implements the paper: **"Look-Ahead Digital Twin: Proactive Byza
 
 **Last updated:** February 21, 2025  
 **Authors:** Hugo Bourreau and collaborators  
-**Maintained by:** [GitHub issue tracker](https://github.com/yourusername/la-dt/issues)
+**Maintained by:** [GitHub issue tracker](https://github.com/SkYiMlTo/la-dt/issues)
