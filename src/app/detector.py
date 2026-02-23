@@ -17,8 +17,8 @@ import requests
 import threading
 from collections import deque
 
-from .lstm_model import AnomalyScorer
-from .attribution import AttributionEngine, AttributionResult
+from ..models.lstm_model import AnomalyScorer
+from ..attribution import AttributionEngine, AttributionResult
 from .mock_generator import MockDataGenerator
 
 # ---------------------------------------------------------------------------
