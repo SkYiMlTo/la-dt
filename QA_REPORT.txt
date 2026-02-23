@@ -1,0 +1,228 @@
+================================================================================
+                    LA-DT REPOSITORY QUALITY ASSURANCE REPORT
+                              FINAL VALIDATION (v1.0)
+================================================================================
+Date: February 22, 2026
+Repository: https://github.com/SkYiMlTo/la-dt
+Status: ✓ PASSED - Publication Ready
+
+================================================================================
+[1] REPOSITORY STRUCTURE VALIDATION
+================================================================================
+
+Directory Organization:
+  ✓ ROOT FILES (7):
+    - README.md (10.4 KB) - Project overview
+    - REPRODUCIBILITY.md (14.5 KB) - Reproducibility guide  
+    - setup.py (2.6 KB) - Installation configuration [FIXED]
+    - requirements.txt (765 B) - Python dependencies
+    - LICENSE (2.1 KB) - MIT license
+    - .gitignore (1.5 KB) - Git conf================================================================================
+               D                     LA-DT REPOSITORY QUALITY ASSURANCE REPORT
+                 e
+                              FINAL VALIDATION (v1.0)
+======__====================================================ICDate: February 22, 2026
+Repository: https://github.com/SkYiMlTo/la-dt
+Status: ??Repository: https://gi (Status: ✓
+    - models/ [VERIFIED]
+      ├── gat_model.py (600+ lines)
+      ?1] REPOSITORY STRUCTURE VALIDATION
+===================================D]
+      ?=================================  
+Directory Organization:
+  ✓ ROOT FILES (7):
+    - README.md (10.4 KB) - Proj??? ✓ ROOain_data_loader    - README.md (10. r    - REPRODUCIBILITY.md (14.5 KB) - Reprod (    - setup.py (2.6 KB) - Installation configuration [FIXEDai    - requirements.txt (765 B) - Python dependencies
+    -       - LICENSE (2.1 KB) - MIT license
+    - .gitigno??   - .gitignore (1.5 KB) - Git cony
+               D                     LA-DT REPOSITORY QUALITY ASSURANCE REPORT
+                 e
+                 it                 e
+                              FIN publication-ready PDFs + P                 7_======__============================================_7Repository: https://github.com/SkYiMlTo/la-dt
+Status: ??Repository: https://gi (Stad Status: ??Repository: https://gi (Status: ?e    - models/ [VERIFIED]
+      ├── gat_
+       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIn ===================================D]
+           ?============================JuDirectory Organization:
+  ✓ ROOT FILES (==  ✓ ROOT FILES (7):
+==    - README.md (10.==    -       - LICENSE (2.1 KB) - MIT license
+    - .gitigno??   - .gitignore (1.5 KB) - Git cony
+               D                     LA-DT REPOSITORY QUALITY ASSURANCE REPORT
+                 
+  ✓ Compiled: src/models/gat_model.py
+  ✓ Compiled: src/models/lstm_model.py
+  ✓ Com               D                     LA-DT REPOSITOse                 e
+                 it                 e
+                    D]                 ct                              FIN putmStatus: ??Repository: https://gi (Stad Status: ??Repository: https://gi (Status: ?e    - models/ [VERIFIED]
+      ├── gat_
+       ├── gat_modri      ?1] REPOSITO i      ├── gat_
+       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIn ================(was:        ├── ga G           ?============================JuDirectory Organization:
+  ✓ ROOT FILES (==  ✓ ROOT FILES  r  ?tory links
+  
+  [FIXED] #3: src/attribution folder structure
+ ==    - README.md (10.==    -       - LI__    - .gitigno??   - .gitignore (1.5 KB) - Git cony
+              ==               D                     LA-DT REPOSITO==                 
+  ✓ Compiled: src/models/gat_model.py
+  ✓ Compiled: src==  ✓ Compiled: ==  ✓ Compiled: src/models/lstm_model.==  ✓ Com               D               M                 it                 e
+                    D]                 ctas                    D]              tl      ├── gat_
+       ├── gat_modri      ?1] REPOSITO i      ├── gat_
+       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIn ================(was:        ?        ├n requires:       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIth  ✓ ROOT FILES (==  ✓ ROOT FILES  r  ?tory links
+  
+  [FIXED] #3: src/attribution folder structure
+ ==    - READev, gpu, viz targets defined
+
+==============================  
+  [FIXED] #3: src/attribution folder structure
+ ==]  IL ==    - README.md (10.==    -       - LI__  ==              ==               D                     LA-DT REPOSITO==                 
+  ✓ Cor  ✓ Compiled: src/models/gat_model.py
+  ✓ Compiled: src==  ✓ Compiled: ==  ✓ )
+  ✓ Compiled: src==  ✓ Compiled: =na                    D]                 ctas                    D]              tl      ├── gat_
+       ├── gat_modri      ?1] REPOSITO i      ?d       ├── gat_modri      ?1] REPOSITO i      ├── gat_
+       ├── gat_modri      Da       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIat  
+  [FIXED] #3: src/attribution folder structure
+ ==    - READev, gpu, viz targets defined
+
+==============================  
+  [FIXED] #3: src/attribution folder structure
+ ==]  IL ==    - README.md (10.==    -      =============
+[5] PAPER & DO UM ==    - READev, gpu, viz targets defined
+
+====
+==============================  
+  [FIX===  [FIXED] #3: src/attribution fub ==]  IL ==    - README.md (10.==    -       pe  ✓ Cor  ✓ Compiled: src/models/gat_model.py
+  ✓ Compiled: src==  ✓ Compiled: ==  ✓ )
+  ✓ Compiled: src==  ✓ Compiled: =na     G  ✓ Compiled: src==  ✓ Compiled: ==  ✓ )
+dt  ✓ Compiled: src==  ✓ Compiled: =na     n:       ├── gat_modri      ?1] REPOSITO i      ?d       ├── gat_modri      ?1] REPOSITO i      ├── gat_
+       ├──ag       ├── gat_modri      Da       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIat  
+  [FIXED] #3: src==  [FIXED] #3: src/attribution folder structure
+ ==    - READev, gpu, viz targets defined
+
+=============== ==    - READev, gpu, viz targets defined
+
+==Co
+========================== 8
+  ✓ Latest:  [FIXED] #3: src/attribution fat ==]  IL ==    - README.md (10.==    -      = c[5] PAPER & DO UM ==    - READev, gpu, viz targets defin 2
+====
+==============================  
+  [FIX===  [FIXED]ility gu  [FIX===  [FIXED] #3: src/attr-   ✓ Compiled: src==  ✓ Compiled: ==  ✓ )
+  ✓ Compiled: src==  ✓ Compiled: =na     G  ✓ Compiled: src==  ✓ Compiled: ==  ?-  ✓ Compiled: src==  ✓ Compiled: =na     tadt  ✓ Compiled: src==  ✓ Compiled: =na     n:       ├── gat_modri      ?1] REPOSmo       ├──ag       ├── gat_modri      Da       ├── gat_modri      ?1] REPOSITORY STRUCTURE VALIDATIat  
+  [FIXED] #3: src==  [FIXED] #3: src/attributionOD  [FIXED] #3: KLIST
+================================================================================
+
+Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll
+=============== ==    - READev, gpu, viy l
+==Co
+========================== 8
+  ✓ Latest:  [FIXEsag===ns  ✓ Latest:  [FIXED] #3: LI====
+==============================  
+  [FIX===  [FIXED]ility gu  [FIX===  [FIXED] #3: src/attr-   ✓ Compiled: src==  ✓ Compiled: ==  ✓ )
+  ✓ ai===g/  [FIX===  [FIXED]ility gu  [FI    ✓ Compiled: src==  ✓ Compiled: =na     G  ✓ Compiled: src==  ✓ Compiled: ==  ?-  ✓ Compile L  [FIXED] #3: src==  [FIXED] #3: src/attributionOD  [FIXED] #3: KLIST
+================================================================================
+
+Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll
+=============== ==    - READev, gpu, viy l
+==Co
+========================== 8
+  ✓ Latest:  [FIXEsag===ns  ✓ LN ======================================================================
+Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+==============n a  ✓ p ==  en
+=============== ==   ll
+=============== ==    oun=============== umptions==Co
+========================== 8
+  ✓ Lal===ti  ✓ Latest:  [FIXEsag===ne:==============================  
+  [FIX===  [FIXED]ility gu cu  [FIX===  [FIXED]ility gu  [FIl-  ✓ ai===g/  [FIX===  [FIXED]ility gu  [FI    ✓ Compiled: src==  ✓ Compiled: =na     G  ✓ Compilar================================================================================
+
+Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll
+=============== ==    - READev, gpu, viy l
+==Co
+==es
+Instacitly analyzed
+
+Code Quality:
+  ✓ All imports resolved and tested
+  ✓ Pa  ✓ p ==  ur
+=============== ==   ll
+=============== ==    bil=============== ==    ??==Co
+========================== 8
+  ✓ Lsa===
+=  ✓ Latest:  [FIXEsag===n==Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+==============n a  ✓ p ==  en
+============  ✓ p ==  ==
+==============n a  ✓ p ==  en
+==============th:=============== ==   ll
+======l =============== ==    sy========================== 8
+  ✓ Lal===ti  ✓ Latto  ?EAN
+  - Documentation CO  [FIX===  [FIXED]ility gu cu  [FIX===  [FIXED]ility gu  [FIl-  ✓ ai===gpa
+Installation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll
+=============== ==    - READev, gpu, viy l
+==Co
+==es
+Instacitly analyzed
+
+Code Quality:
+  ✓ All imports resolved and tested
+  ✓ Pa  ✓ p ==  ur
+=========ori  ✓ p ==  io
+=============== ==   ll
+=============== ==    171=============== ==    ea==Co
+==es
+Instacitly analyzed
+
+Code Qualitu==e  Inshe
+Code Quality:
+  ?wi  ✓ All imoo  ✓ Pa  ✓ p ==  ur
+============= m=============== ==   ================= ==    ============================ 8
+  ✓ Lsa===
+=  ✓ Lat=
+  ✓ Lsa===
+=  ✓ Latest:===  ✓ Late==  ✓ p ==    - READev, gpu, viz targets d==
+==============n a  ✓ p ==  en
+============  ...============  ✓ p ==  ==
+===nt==============n a  ✓ p 0/==============th:=============li======l ============== ✓
+Reproducibilit  ✓ Lal===ti  ✓ Latto  ?EAN
+  - Documentation CO  [FI..  - Documentation CO  [FIX===  [liInstallation:
+  ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll
+=======?? ✓ p ==  ??
+====?
+OVERALL SCORE: ........................... =============== ==   
+RE==Co
+==es
+Instacitly analyzed
+
+Code Quali I==e SIns20
+Code Quality:
+  ?==  ✓ All im==  ✓ Pa  ✓ p ==  ur
+=========ori ===========ori  ✓ p =S
+=============== ==   ll
+================== ==    ====es
+Instacitly analyzed
+
+Code Qualitu==e  Inshe
+CodbmInsto
+Code Qualitu==e  (TaCode Quality:
+  ?wi ad  ?wi  ✓ 2.============= m=============== ==   =====si  ✓ Lsa===
+=  ✓ Lat=
+  ✓ Lsa===
+=  ✓ Latest:===  ✓ Late==  ✓ p ==    - READev v=  ✓ Lat=lo  ✓ Lsa= C=  ✓ Latelo==============n a  ✓ p ==  en
+============  ...============  ✓ p ==  A============  ...============ ow===nt==============n a  ✓ p 0/==========onReproducibilit  ✓ Lal===ti  ✓ Latto  ?EAN
+  - Documentation CO  [FI..  - Documentat==  - Documentation CO  [FI..  - Documentation C    ✓ p ==    - READev, gpu, viz targets defined
+
+=============== ==   ll==
+=============== ==   ll
+=======?? ✓ p ==  ?============
