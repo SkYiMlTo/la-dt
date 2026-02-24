@@ -48,7 +48,7 @@ def experiment_3_scalability() -> Dict:
         # Attack amplitudes: strong training signal, medium test signal that weakens with network size
         train_delta = 0.013 
         # Test signal: medium-high for small networks, gradually weakens for large networks
-        test_delta = 0.013 * (0.92 - 0.25 * n_nodes / 100.0) 
+        test_delta = 0.013 * (0.92 - 0.40 * n_nodes / 100.0) 
         # OLD :               0.85.  0.45
         # Training data with realistic noise
         att_gen = AttackDataGenerator(num_nodes=n_nodes, seq_len=100, num_samples=300)
