@@ -1,0 +1,386 @@
+{
+  "experiment_1_robustness": {
+    "S1_Linear_Drift": {
+      "precision": 0.8965,
+      "precision_std": 0.021,
+      "recall": 0.9896,
+      "recall_std": 0.0048,
+      "f1": 0.9406,
+      "f1_std": 0.0114,
+      "accuracy": 0.9374,
+      "accuracy_std": 0.0128,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[FULL]",
+      "num_seeds": 5
+    },
+    "S2_Exponential_Drift": {
+      "precision": 0.8669,
+      "precision_std": 0.0243,
+      "recall": 0.7366,
+      "recall_std": 0.0189,
+      "f1": 0.796,
+      "f1_std": 0.0113,
+      "accuracy": 0.8112,
+      "accuracy_std": 0.0108,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[FULL]",
+      "num_seeds": 5
+    },
+    "S3_Polynomial_Drift": {
+      "precision": 0.8854,
+      "precision_std": 0.0328,
+      "recall": 0.8032,
+      "recall_std": 0.0051,
+      "f1": 0.842,
+      "f1_std": 0.0147,
+      "accuracy": 0.849,
+      "accuracy_std": 0.0167,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[PART]",
+      "num_seeds": 5
+    },
+    "S4_Frogging": {
+      "precision": 0.8773,
+      "precision_std": 0.0309,
+      "recall": 0.804,
+      "recall_std": 0.0096,
+      "f1": 0.8389,
+      "f1_std": 0.0184,
+      "accuracy": 0.8454,
+      "accuracy_std": 0.0193,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[PART]",
+      "num_seeds": 5
+    },
+    "S5_Natural_Mimicry": {
+      "precision": 0.6797,
+      "precision_std": 0.3433,
+      "recall": 0.5751,
+      "recall_std": 0.3195,
+      "f1": 0.6183,
+      "f1_std": 0.3271,
+      "accuracy": 0.7317,
+      "accuracy_std": 0.1553,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[PART]",
+      "num_seeds": 5
+    },
+    "S6_FDI_Step_Change": {
+      "precision": 0.8795,
+      "precision_std": 0.0194,
+      "recall": 0.8795,
+      "recall_std": 0.2158,
+      "f1": 0.8651,
+      "f1_std": 0.1392,
+      "accuracy": 0.8815,
+      "accuracy_std": 0.0993,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[NONE]",
+      "num_seeds": 5
+    },
+    "S7_Majority_Compromised": {
+      "precision": 0.8967,
+      "precision_std": 0.0217,
+      "recall": 0.9968,
+      "recall_std": 0.0064,
+      "f1": 0.9439,
+      "f1_std": 0.0097,
+      "accuracy": 0.9406,
+      "accuracy_std": 0.0111,
+      "attribution_acc": 0.7,
+      "attribution_acc_std": 0.0,
+      "support_level": "[NONE]",
+      "num_seeds": 5
+    },
+    "S8_Seasonal_Mimicry": {
+      "precision": 0.8796,
+      "precision_std": 0.0202,
+      "recall": 0.8305,
+      "recall_std": 0.0218,
+      "f1": 0.8541,
+      "f1_std": 0.0163,
+      "accuracy": 0.8582,
+      "accuracy_std": 0.0155,
+      "attribution_acc": 0.8,
+      "attribution_acc_std": 0.0,
+      "support_level": "[NONE]",
+      "num_seeds": 5
+    }
+  },
+  "experiment_2_horizon": {
+    "5": {
+      "accuracy_pct": 47.5,
+      "correct": 19,
+      "total": 40,
+      "avg_vgr": 1.165,
+      "avg_scd": 0.043,
+      "avg_llr": 0.871
+    },
+    "10": {
+      "accuracy_pct": 55.0,
+      "correct": 22,
+      "total": 40,
+      "avg_vgr": 1.546,
+      "avg_scd": 0.12,
+      "avg_llr": 1.904
+    },
+    "30": {
+      "accuracy_pct": 87.5,
+      "correct": 35,
+      "total": 40,
+      "avg_vgr": 3.056,
+      "avg_scd": 0.359,
+      "avg_llr": 3.98
+    },
+    "60": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "avg_vgr": 4.545,
+      "avg_scd": 0.402,
+      "avg_llr": 4.895
+    }
+  },
+  "experiment_3_scalability": {
+    "5": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "tp": 75,
+      "fp": 0,
+      "fn": 0,
+      "tn": 75,
+      "attribution_acc": 0.8,
+      "num_samples": 150,
+      "train_time_s": 14.07,
+      "inference_ms": 6.79,
+      "gat_ops": 25,
+      "lstm_ops": 25,
+      "speedup_ratio": 1.0,
+      "byzantine_nodes": 2
+    },
+    "10": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "tp": 75,
+      "fp": 0,
+      "fn": 0,
+      "tn": 75,
+      "attribution_acc": 0.9,
+      "num_samples": 150,
+      "train_time_s": 12.83,
+      "inference_ms": 8.94,
+      "gat_ops": 100,
+      "lstm_ops": 100,
+      "speedup_ratio": 1.0,
+      "byzantine_nodes": 2
+    },
+    "20": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "tp": 75,
+      "fp": 0,
+      "fn": 0,
+      "tn": 75,
+      "attribution_acc": 0.95,
+      "num_samples": 150,
+      "train_time_s": 12.13,
+      "inference_ms": 14.6,
+      "gat_ops": 400,
+      "lstm_ops": 400,
+      "speedup_ratio": 1.0,
+      "byzantine_nodes": 2
+    },
+    "50": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "tp": 75,
+      "fp": 0,
+      "fn": 0,
+      "tn": 75,
+      "attribution_acc": 0.97,
+      "num_samples": 150,
+      "train_time_s": 36.13,
+      "inference_ms": 44.58,
+      "gat_ops": 2500,
+      "lstm_ops": 2500,
+      "speedup_ratio": 1.0,
+      "byzantine_nodes": 3
+    },
+    "100": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "tp": 75,
+      "fp": 0,
+      "fn": 0,
+      "tn": 75,
+      "attribution_acc": 0.98,
+      "num_samples": 150,
+      "train_time_s": 76.66,
+      "inference_ms": 97.59,
+      "gat_ops": 10000,
+      "lstm_ops": 10000,
+      "speedup_ratio": 1.0,
+      "byzantine_nodes": 4
+    }
+  },
+  "experiment_4_swat": {
+    "precision": 0.9752,
+    "recall": 0.785,
+    "f1": 0.8698,
+    "accuracy": 0.8825,
+    "tp": 157,
+    "fp": 4,
+    "fn": 43,
+    "tn": 196,
+    "attribution_acc": 1.0,
+    "num_samples": 400,
+    "train_time_s": 307.78,
+    "total_samples": 1996,
+    "num_sensors": 51
+  },
+  "experiment_5_ai": {
+    "precision": 0.4783,
+    "recall": 1.0,
+    "f1": 0.6471,
+    "accuracy": 0.4783,
+    "tp": 11,
+    "fp": 12,
+    "fn": 0,
+    "tn": 0,
+    "attribution_acc": 1.0,
+    "num_samples": 23,
+    "train_time_s": 14.85,
+    "total_samples": 114,
+    "num_sensors": 51
+  },
+  "experiment_6_ablation": {
+    "Full_LA-DT": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 100.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 100.0,
+        "Moderate_30min": 100.0,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": 0.0
+    },
+    "w/o_VGR": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 100.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 100.0,
+        "Moderate_30min": 100.0,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": 0.0
+    },
+    "w/o_DEV": {
+      "accuracy_pct": 67.5,
+      "correct": 27,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 50.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 0.0,
+        "Moderate_30min": 87.5,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": -32.5
+    },
+    "w/o_SCD": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 100.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 100.0,
+        "Moderate_30min": 100.0,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": 0.0
+    },
+    "VGR_only": {
+      "accuracy_pct": 67.5,
+      "correct": 27,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 50.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 0.0,
+        "Moderate_30min": 87.5,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": -32.5
+    },
+    "DEV_only": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "per_scenario": {
+        "Linear_15min": 100.0,
+        "FDI_Step_30min": 100.0,
+        "Correlated_15min": 100.0,
+        "Moderate_30min": 100.0,
+        "Strong_60min": 100.0
+      },
+      "impact_pct": 0.0
+    }
+  },
+  "experiment_7_swat_attribution": {
+    "5": {
+      "accuracy_pct": 75.0,
+      "correct": 15,
+      "total": 20,
+      "avg_vgr": 1.442,
+      "avg_scd": 0.002,
+      "avg_llr": 1.644
+    },
+    "10": {
+      "accuracy_pct": 100.0,
+      "correct": 20,
+      "total": 20,
+      "avg_vgr": 1.027,
+      "avg_scd": 0.003,
+      "avg_llr": 1.886
+    },
+    "30": {
+      "accuracy_pct": 100.0,
+      "correct": 20,
+      "total": 20,
+      "avg_vgr": 1.499,
+      "avg_scd": 0.012,
+      "avg_llr": 2.25
+    },
+    "60": {
+      "accuracy_pct": 100.0,
+      "correct": 20,
+      "total": 20,
+      "avg_vgr": 1.234,
+      "avg_scd": 0.03,
+      "avg_llr": 2.062
+    }
+  }
+}

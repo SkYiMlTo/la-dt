@@ -1,0 +1,17 @@
+\begin{table}[h]
+\centering
+\caption{Byzantine Attack Robustness: F1 Scores}
+\label{tab:robustness_empirical}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Attack Class} & \textbf{F1 Score} & \textbf{Std Dev} \\
+\midrule
+S1 (Linear Drift [DETECTABLE]) & 0.972 & 0.013 \\
+S2 (Exponential Surge [DETECTABLE]) & 0.983 & 0.008 \\
+S3 (Persistent Bias [STEALTHY]) & 0.166 & 0.062 \\
+S4 (Wave Oscillation [DETECTABLE]) & 0.983 & 0.010 \\
+S6 (FDI Step Change [DETECTABLE]) & 0.986 & 0.010 \\
+S7 (All Nodes Compromised [FUNDAMENTAL LIMIT]) & 0.057 & 0.031 \\
+\bottomrule
+\end{tabular}
+\end{table}

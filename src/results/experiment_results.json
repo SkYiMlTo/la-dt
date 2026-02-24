@@ -1,0 +1,213 @@
+{
+  "experiment_1_robustness": {
+    "S1": {
+      "f1": 0.9724,
+      "std": 0.0132,
+      "name": "Linear Drift [DETECTABLE]"
+    },
+    "S2": {
+      "f1": 0.9828,
+      "std": 0.0084,
+      "name": "Exponential Surge [DETECTABLE]"
+    },
+    "S3": {
+      "f1": 0.1657,
+      "std": 0.0621,
+      "name": "Persistent Bias [STEALTHY]"
+    },
+    "S4": {
+      "f1": 0.9828,
+      "std": 0.0101,
+      "name": "Wave Oscillation [DETECTABLE]"
+    },
+    "S6": {
+      "f1": 0.9858,
+      "std": 0.0096,
+      "name": "FDI Step Change [DETECTABLE]"
+    },
+    "S7": {
+      "f1": 0.0574,
+      "std": 0.0312,
+      "name": "All Nodes Compromised [FUNDAMENTAL LIMIT]"
+    }
+  },
+  "experiment_2_horizon": {
+    "5": {
+      "accuracy_pct": 35.0,
+      "correct": 14,
+      "total": 40,
+      "avg_vgr": 1.268,
+      "avg_scd": 0.074,
+      "avg_llr": 0.848
+    },
+    "10": {
+      "accuracy_pct": 55.0,
+      "correct": 22,
+      "total": 40,
+      "avg_vgr": 1.83,
+      "avg_scd": 0.208,
+      "avg_llr": 2.441
+    },
+    "30": {
+      "accuracy_pct": 80.0,
+      "correct": 32,
+      "total": 40,
+      "avg_vgr": 3.618,
+      "avg_scd": 0.487,
+      "avg_llr": 4.247
+    },
+    "60": {
+      "accuracy_pct": 100.0,
+      "correct": 40,
+      "total": 40,
+      "avg_vgr": 4.992,
+      "avg_scd": 0.496,
+      "avg_llr": 5.133
+    }
+  },
+  "experiment_3_scalability": {
+    "5": {
+      "num_nodes": 5,
+      "f1": 1.0,
+      "attribution_acc": 0.84,
+      "accuracy": 1.0,
+      "inference_ms": 1.27,
+      "speedup_ratio": 1.0
+    },
+    "10": {
+      "num_nodes": 10,
+      "f1": 1.0,
+      "attribution_acc": 0.65,
+      "accuracy": 1.0,
+      "inference_ms": 2.47,
+      "speedup_ratio": 0.9110074431558491
+    },
+    "20": {
+      "num_nodes": 20,
+      "f1": 0.995,
+      "attribution_acc": 0.645,
+      "accuracy": 0.995,
+      "inference_ms": 4.29,
+      "speedup_ratio": 0.4881968008737398
+    },
+    "50": {
+      "num_nodes": 50,
+      "f1": 1.0,
+      "attribution_acc": 0.66,
+      "accuracy": 1.0,
+      "inference_ms": 9.45,
+      "speedup_ratio": 0.21401732000500842
+    },
+    "100": {
+      "num_nodes": 100,
+      "f1": 1.0,
+      "attribution_acc": 0.665,
+      "accuracy": 1.0,
+      "inference_ms": 29.2,
+      "speedup_ratio": 0.11468904205225287
+    }
+  },
+  "experiment_4_swat": {
+    "precision": 0.9951,
+    "recall": 0.9269,
+    "f1": 0.9598,
+    "accuracy": 0.9725,
+    "tp": 203,
+    "fp": 1,
+    "fn": 16,
+    "tn": 398,
+    "attribution_acc": 1.0,
+    "num_samples": 618,
+    "train_time_s": 2081.32,
+    "train_samples": 2471,
+    "test_samples": 618,
+    "num_sensors": 51
+  },
+  "experiment_5_ai": {
+    "precision": 0.5217,
+    "recall": 1.0,
+    "f1": 0.6857,
+    "accuracy": 0.5417,
+    "tp": 12,
+    "fp": 11,
+    "fn": 0,
+    "tn": 1,
+    "attribution_acc": 0.8268,
+    "num_samples": 24,
+    "train_time_s": 91.35,
+    "total_samples": 116,
+    "num_sensors": 51
+  },
+  "experiment_6_ablation": {
+    "Full_LA-DT": {
+      "accuracy_pct": 65.0,
+      "impact_pct": 0.0,
+      "correct": 130,
+      "total": 200
+    },
+    "w/o_VGR": {
+      "accuracy_pct": 64.5,
+      "impact_pct": -0.5,
+      "correct": 129,
+      "total": 200
+    },
+    "w/o_DEV": {
+      "accuracy_pct": 22.0,
+      "impact_pct": -43.0,
+      "correct": 44,
+      "total": 200
+    },
+    "w/o_SCD": {
+      "accuracy_pct": 67.5,
+      "impact_pct": 2.5,
+      "correct": 135,
+      "total": 200
+    },
+    "VGR_only": {
+      "accuracy_pct": 0.0,
+      "impact_pct": -65.0,
+      "correct": 0,
+      "total": 200
+    },
+    "DEV_only": {
+      "accuracy_pct": 60.0,
+      "impact_pct": -5.0,
+      "correct": 120,
+      "total": 200
+    }
+  },
+  "experiment_7_swat_attribution": {
+    "5": {
+      "accuracy_pct": 0.0,
+      "correct": 0,
+      "total": 50,
+      "avg_vgr": 1.115,
+      "avg_scd": 0.001,
+      "avg_llr": 0.135
+    },
+    "10": {
+      "accuracy_pct": 24.0,
+      "correct": 12,
+      "total": 50,
+      "avg_vgr": 1.112,
+      "avg_scd": 0.003,
+      "avg_llr": 0.775
+    },
+    "30": {
+      "accuracy_pct": 82.0,
+      "correct": 41,
+      "total": 50,
+      "avg_vgr": 0.78,
+      "avg_scd": 0.007,
+      "avg_llr": 1.68
+    },
+    "60": {
+      "accuracy_pct": 92.0,
+      "correct": 46,
+      "total": 50,
+      "avg_vgr": 0.98,
+      "avg_scd": 0.01,
+      "avg_llr": 1.79
+    }
+  }
+}

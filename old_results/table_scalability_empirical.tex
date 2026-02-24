@@ -1,0 +1,16 @@
+\begin{table}[h]
+\centering
+\caption{GAT Scalability: Detection and Attribution vs. Network Size}
+\label{tab:scalability_empirical}
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Nodes ($N$)} & \textbf{Byz. Nodes} & \textbf{F1} & \textbf{Attrib. Acc.} & \textbf{Infer. (ms)} & \textbf{GAT/LSTM Speedup} \\
+\midrule
+5 & 2 & 1.000 & 0.800 & 6.8 & 1.0$\times$ \\
+10 & 2 & 1.000 & 0.900 & 8.9 & 1.0$\times$ \\
+20 & 2 & 1.000 & 0.950 & 14.6 & 1.0$\times$ \\
+50 & 3 & 1.000 & 0.970 & 44.6 & 1.0$\times$ \\
+100 & 4 & 1.000 & 0.980 & 97.6 & 1.0$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}

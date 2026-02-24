@@ -29,6 +29,7 @@ from torch_geometric.data import Data, DataLoader
 from typing import Tuple, List, Dict, Optional
 import numpy as np
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -185,8 +186,13 @@ class GAT_Byzantine_Detector(nn.Module):
 class GAT_Trainer:
     """Training harness for GAT Byzantine detector."""
     
-    def __init__(self, config: GAT_Config):
-        """Initialize trainer."""
+    def __init__(self, config: GAT_Config, models_dir: Optional[Path] = None):
+        """Initialize trainer.
+        
+        Args:
+            config: GAT configuration
+            models_dir: Directory to save trained models. Defaults to src/models directory.
+        """
         self.config = config
         self.device = torch.device(config.device)
         self.model = GAT_Byzantine_Detector(config)
@@ -201,6 +207,12 @@ class GAT_Trainer:
         }
         self.best_val_loss = float("inf")
         self.patience_counter = 0
+        
+        # Set models directory
+        if models_dir is None:
+            models_dir = Path(__file__).parent
+        self.models_dir = Path(models_dir)
+        self.models_dir.mkdir(parents=True, exist_ok=True)
     
     def train_epoch(self, train_loader: DataLoader) -> float:
         """Train for one epoch."""
@@ -298,12 +310,14 @@ class GAT_Trainer:
         return self.history
     
     def _save_best_model(self):
-        """Save best model weights."""
-        torch.save(self.model.state_dict(), "best_gat_model.pt")
+        """Save best model weights to models directory."""
+        model_path = self.models_dir / "best_gat_model.pt"
+        torch.save(self.model.state_dict(), model_path)
     
     def _load_best_model(self):
-        """Load best model weights."""
-        self.model.load_state_dict(torch.load("best_gat_model.pt"))
+        """Load best model weights from models directory."""
+        model_path = self.models_dir / "best_gat_model.pt"
+        self.model.load_state_dict(torch.load(model_path))
 
 
 class GAT_Evaluator:

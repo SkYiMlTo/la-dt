@@ -14,9 +14,11 @@ Architecture:
 
 import math
 import time
+import pickle
 from collections import deque
 from dataclasses import dataclass, field
 from typing import Optional
+from pathlib import Path
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -144,6 +146,37 @@ class AnomalyScorer:
     def reset(self):
         """Clear all baselines (used when switching scenarios)."""
         self._baselines.clear()
+    
+    def save(self, path: Path) -> Path:
+        """
+        Save the anomaly scorer state to disk.
+        
+        Args:
+            path: Path to save the scorer (.pkl file)
+        
+        Returns:
+            Path where the scorer was saved
+        """
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'wb') as f:
+            pickle.dump(self, f)
+        return path
+    
+    @staticmethod
+    def load(path: Path) -> "AnomalyScorer":
+        """
+        Load an anomaly scorer state from disk.
+        
+        Args:
+            path: Path to the saved scorer (.pkl file)
+        
+        Returns:
+            Loaded AnomalyScorer instance with previous state
+        """
+        path = Path(path)
+        with open(path, 'rb') as f:
+            return pickle.load(f)
 
 
 @dataclass
