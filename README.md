@@ -253,12 +253,6 @@ If you use this code in your research, please cite:
 
 ---
 
-## License
-
-See [LICENSE](LICENSE) file for details.
-
----
-
 ## Troubleshooting
 
 ### Common Issues
