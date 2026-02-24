@@ -8,7 +8,7 @@ Imports individual experiment modules and runs them in sequence,
 aggregating results into JSON and LaTeX tables.
 
 Run this file to execute all 7 experiments from scratch with real computed
-results (no hardcoded metrics).
+results.
 
 Usage:
   python -m src.experiments.main_run_all_experiments              # All experiments
@@ -170,7 +170,7 @@ def main(exp_numbers: List[int] = None):
     print("\n" + "#" * 80)
     print("#  LA-DT COMPREHENSIVE EXPERIMENT SUITE")
     print(f"#  Running experiments: {exp_numbers}")
-    print("#  All results computed from scratch -- no hardcoded metrics")
+    print("#  All results computed from scratch")
     print("#" * 80)
 
     all_results = {}

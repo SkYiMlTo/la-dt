@@ -59,7 +59,7 @@ def experiment_2_multi_horizon(num_windows: int = 40) -> Dict:
             sign = 1 if j % 2 == 0 else -1
             t_arr = np.arange(t_len, dtype=np.float64) / 60.0
             drift = sign * window_drift * t_arr
-            noise_drift = np.random.normal(0, 0.045, t_len)  # Moderate noise for detection progression
+            noise_drift = np.random.normal(0, 0.045, t_len)
             window_attacked[:, target] += drift + noise_drift
 
         for h_min in HORIZONS_MIN:

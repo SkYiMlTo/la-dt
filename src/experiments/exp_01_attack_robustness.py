@@ -3,8 +3,8 @@ exp_01_attack_robustness.py
 ============================
 Experiment 1: Byzantine Attack Robustness Matrix
 
-Evaluates GAT detection accuracy across 8 Byzantine attack classes
-(S1-S8). Tests both seen (S1-S6) and zero-shot (S7-S8) attack patterns.
+Evaluates GAT detection accuracy across 6 Byzantine attack classes
+(S1-S6). Tests both detectable (S1-S4), stealthy (S5) and fundamental limit (S6) attack patterns.
 
 Outputs:
   - Detection F1 scores per attack class (mean ± std over seeds)
@@ -40,10 +40,9 @@ from src.utils import (
 
 def experiment_1_attack_robustness(num_seeds: int = 5) -> Dict:
     """
-    Test robustness against 8 Byzantine attack classes.
+    Test robustness against 6 Byzantine attack classes.
     
-    Trains GAT on 6 attack types (S1-S6), evaluates on all 8 including
-    zero-shot attacks (S7-S8). Uses mixed-difficulty test sets to simulate
+    Trains GAT on 6 attack types (S1-S6), evaluates on all 6. Uses mixed-difficulty test sets to simulate
     realistic attack spectrum.
     
     Args:
@@ -67,10 +66,10 @@ def experiment_1_attack_robustness(num_seeds: int = 5) -> Dict:
     attack_classes = {
         "S1": ("Linear Drift [DETECTABLE]", lambda ag: ag.linear_drift(delta=0.02)),
         "S2": ("Exponential Surge [DETECTABLE]", lambda ag: ag.exponential_drift(delta=0.02, alpha=3.0)),
-        "S3": ("Persistent Bias [STEALTHY]", lambda ag: ag.polynomial_drift(delta=0.015, power=2.0)),
-        "S4": ("Wave Oscillation [DETECTABLE]", lambda ag: ag.frogging_attack(delta=0.02, switch_period=4)),
-        "S6": ("FDI Step Change [DETECTABLE]", lambda ag: ag.fdi_step_change(magnitude=2.0)),
-        "S7": ("All Nodes Compromised [FUNDAMENTAL LIMIT]", lambda ag: ag.majority_compromised(delta=0.002)),
+        "S3": ("Wave Oscillation [DETECTABLE]", lambda ag: ag.frogging_attack(delta=0.02, switch_period=4)),
+        "S4": ("FDI Step Change [DETECTABLE]", lambda ag: ag.fdi_step_change(magnitude=2.0)),
+        "S5": ("Persistent Bias [STEALTHY]", lambda ag: ag.polynomial_drift(delta=0.015, power=2.0)),
+        "S6": ("All Nodes Compromised [FUNDAMENTAL LIMIT]", lambda ag: ag.majority_compromised(delta=0.002)),
     }
 
     # Run multiple times with different seeds to get mean ± std
@@ -93,7 +92,7 @@ def experiment_1_attack_robustness(num_seeds: int = 5) -> Dict:
             diverse_attacks=True
         )
 
-        # Evaluate on all 8 attack classes
+        # Evaluate on all 6 attack classes
         for attack_id, (attack_name, attack_fn) in attack_classes.items():
             att_gen = AttackDataGenerator(num_nodes=NUM_NODES, seq_len=100, num_samples=200)
             X_test, y_test, attrs_test = attack_fn(att_gen)

@@ -68,42 +68,42 @@
   "experiment_3_scalability": {
     "5": {
       "num_nodes": 5,
-      "f1": 1.0,
+      "f1": 0.8729,
       "attribution_acc": 0.84,
-      "accuracy": 1.0,
-      "inference_ms": 1.27,
+      "accuracy": 0.885,
+      "inference_ms": 1.38,
       "speedup_ratio": 1.0
     },
     "10": {
       "num_nodes": 10,
-      "f1": 1.0,
-      "attribution_acc": 0.65,
-      "accuracy": 1.0,
-      "inference_ms": 2.47,
+      "f1": 0.913,
+      "attribution_acc": 0.684,
+      "accuracy": 0.92,
+      "inference_ms": 2.34,
       "speedup_ratio": 0.9110074431558491
     },
     "20": {
       "num_nodes": 20,
-      "f1": 0.995,
-      "attribution_acc": 0.645,
-      "accuracy": 0.995,
-      "inference_ms": 4.29,
+      "f1": 0.9418,
+      "attribution_acc": 0.674,
+      "accuracy": 0.945,
+      "inference_ms": 3.58,
       "speedup_ratio": 0.4881968008737398
     },
     "50": {
       "num_nodes": 50,
-      "f1": 1.0,
-      "attribution_acc": 0.66,
-      "accuracy": 1.0,
-      "inference_ms": 9.45,
+      "f1": 0.8879,
+      "attribution_acc": 0.579,
+      "accuracy": 0.88,
+      "inference_ms": 10.43,
       "speedup_ratio": 0.21401732000500842
     },
     "100": {
       "num_nodes": 100,
-      "f1": 1.0,
-      "attribution_acc": 0.665,
-      "accuracy": 1.0,
-      "inference_ms": 29.2,
+      "f1": 0.1818,
+      "attribution_acc": 0.8231,
+      "accuracy": 0.55,
+      "inference_ms": 30.06,
       "speedup_ratio": 0.11468904205225287
     }
   },

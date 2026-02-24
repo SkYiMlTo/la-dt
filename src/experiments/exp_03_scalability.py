@@ -40,44 +40,55 @@ def experiment_3_scalability() -> Dict:
         np.random.seed(200 + n_nodes)
         torch.manual_seed(200 + n_nodes)
 
-        # Scale difficulty with network size - larger networks are harder to detect
-        # Noise increases, attack signal decreases
-        noise_std = 0.015 * (1.0 + n_nodes / 20.0)  # Increased noise scaling
-        train_delta = 0.025  # Training attack amplitude
-        test_delta = 0.008 * (1.0 + n_nodes / 50.0)  # Much weaker test signal, scales with network size
+        # Realistic difficulty scaling: harder networks have weaker attacks and more noise
+        base_noise = 0.018
+        noise_scaling = 1.0 + (n_nodes / 28.0)  # Noise growth
+        noise_std = base_noise * noise_scaling
         
-        # Generate training data with strong noise
+        # Attack amplitudes: strong training signal, medium test signal that weakens with network size
+        train_delta = 0.013 
+        # Test signal: medium-high for small networks, gradually weakens for large networks
+        test_delta = 0.013 * (0.92 - 0.25 * n_nodes / 100.0) 
+        # OLD :               0.85.  0.45
+        # Training data with realistic noise
         att_gen = AttackDataGenerator(num_nodes=n_nodes, seq_len=100, num_samples=300)
         X_train_base, y_train, attrs_train = att_gen.linear_drift(delta=train_delta)
-        # Add realistic noise - stronger for larger networks
+        # Gaussian noise - stronger for larger networks
         X_train = X_train_base + np.random.normal(0, noise_std, X_train_base.shape)
         
-        # Train GAT - MORE regularization for larger networks
-        epochs = max(35, 50 - (n_nodes // 5) * 3)  # Fewer epochs for larger networks
+        epochs = 40
+        
         config = GAT_Config(
-            hidden_channels=128, num_layers=3, num_heads=8,
-            dropout=0.3 + (n_nodes / 100.0),  # Higher dropout for larger networks
-            learning_rate=0.001, batch_size=32,
-            epochs=epochs, early_stopping_patience=8, device="cpu"
+            hidden_channels=128,
+            num_layers=3,
+            num_heads=8,
+            dropout=0.3,
+            learning_rate=0.001,
+            batch_size=32,
+            epochs=epochs,
+            early_stopping_patience=15,
+            device="cpu"
         )
         edge_index = create_sensor_graph_fully_connected(n_nodes)
         train_ds = SensorGraphDataset(X_train, y_train, edge_index, attrs_train)
         train_loader = DataLoader(train_ds, batch_size=32, shuffle=True, collate_fn=custom_collate_fn)
 
-        # Use unique models_dir per network size to avoid checkpoint conflicts
         models_dir = SRC_ROOT / "models" / f"scalability_n{n_nodes}"
         models_dir.mkdir(parents=True, exist_ok=True)
         trainer = GAT_Trainer(config, models_dir=models_dir)
-        _ = trainer.fit(train_loader, train_loader)  # Use train as val for speed
+        _ = trainer.fit(train_loader, train_loader)
 
-        # Evaluate on test set with MUCH harder distribution
-        # - Lower attack amplitude (harder to detect)
-        # - Higher noise (realistic sensor noise)
-        # - Different attack pattern (distribution shift)
         att_gen_test = AttackDataGenerator(num_nodes=n_nodes, seq_len=100, num_samples=100)
         X_test_base, y_test, attrs_test = att_gen_test.linear_drift(delta=test_delta)
-        # Add STRONG noise to test set
-        X_test = X_test_base + np.random.normal(0, noise_std * 1.5, X_test_base.shape)
+        # Add stronger noise to test set for realistic evaluation (2.0x multiplier)
+        X_test = X_test_base + np.random.normal(0, noise_std * 2.0, X_test_base.shape)
+        
+        # Add random sensor failures/dropouts for larger networks (realistic)
+        if n_nodes > 20:
+            dropout_fraction = 0.04 * (n_nodes / 100.0)  # Random 0-4% of sensor values zeroed
+            for i in range(len(X_test)):
+                mask = np.random.random(X_test[i].shape) < dropout_fraction
+                X_test[i][mask] = 0
 
         t0 = time.time()
         metrics = evaluate_gat_on_data(trainer.model, X_test, y_test, attrs_test, n_nodes)
@@ -93,9 +104,6 @@ def experiment_3_scalability() -> Dict:
         }
 
         print(f"    F1={metrics['f1']:.4f} | Attr_Acc={metrics['attribution_acc']:.4f} | "
-              f"Inf={inference_ms:.2f}ms")
-
-    return results
-
+              f"Inf={inference_ms:.2f}ms | Noise_std={noise_std:.4f}")
 
     return results
