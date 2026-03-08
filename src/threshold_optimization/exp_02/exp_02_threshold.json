@@ -1,0 +1,14 @@
+{
+  "optimal_threshold": 1.3000000000000007,
+  "cv_metrics": {
+    "f1": 1.0,
+    "f1_std": 0.01,
+    "n_samples": 1200
+  },
+  "procedure": {
+    "method": "stratified_kfold",
+    "n_splits": 5,
+    "num_samples": 1200,
+    "description": "Threshold optimization for Experiment 2 (multi-horizon attribution)"
+  }
+}
