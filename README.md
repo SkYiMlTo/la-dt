@@ -76,7 +76,7 @@ LA-DT/
 
 - Python 3.9 or higher
 - 4GB free disk space
-- ~30 minutes for full experiment suite (varies by hardware)
+- ~1h for full experiment suite (varies by hardware)
 
 ### 2. Clone and Setup
 
@@ -165,12 +165,12 @@ These thresholds are then used by the attribution pipeline during experiments.
 | # | Name | Duration | Output |
 |---|------|----------|--------|
 | 1 | Attack Robustness | ~5 min | F1/Precision/Recall across 8 attack types |
-| 2 | Multi-Horizon Attribution | ~10 min | Attribution accuracy at time horizons 5-60 min |
+| 2 | Multi-Horizon Attribution | ~5 min | Attribution accuracy at time horizons 5-60 min |
 | 3 | Scalability | ~15 min | Performance with 5, 10, 20, 50, 100 node systems |
 | 4 | SWAT Validation | ~10 min | Real-world industrial dataset evaluation |
-| 5 | AI Dataset | ~10 min | Power grid anomaly detection |
-| 6 | Ablation Study | ~15 min | Component importance analysis |
-| 7 | SWAT Attribution | ~20 min | Feature-level attribution on real attacks |
+| 5 | AI Dataset | ~15 min | Power grid anomaly detection |
+| 6 | Ablation Study | ~5 min | Component importance analysis |
+| 7 | SWAT Attribution | ~5 min | Feature-level attribution on real attacks |
 
 ---
 
