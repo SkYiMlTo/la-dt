@@ -8,6 +8,7 @@ at multiple time horizons.
 """
 
 import sys
+import json
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -26,6 +27,26 @@ def experiment_7_swat_attribution(num_windows: int = 50) -> Dict:
     print("\n" + "=" * 80)
     print("EXPERIMENT 7: SWAT Attribution Analysis")
     print("=" * 80)
+
+    # Load optimized thresholds from JSON
+    thresholds_path = SRC_ROOT / "threshold_optimization" / "exp_07" / "exp_07_thresholds.json"
+    if not thresholds_path.exists():
+        print(f"  [ERROR] Thresholds file not found: {thresholds_path}")
+        return {"status": "error", "reason": "Thresholds not found"}
+    
+    with open(thresholds_path, 'r') as f:
+        threshold_config = json.load(f)
+    
+    optimal_thresholds = threshold_config.get("optimal_thresholds", {})
+    if not optimal_thresholds:
+        print("  [ERROR] No optimal_thresholds in config")
+        return {"status": "error", "reason": "No thresholds in config"}
+    
+    print(f"  Using thresholds from: {thresholds_path}")
+    for h in [5, 10, 30, 60]:
+        tau = optimal_thresholds.get(str(h))
+        if tau is not None:
+            print(f"    τ({h:2d}min) = {tau:.2f}")
 
     swat_path = PROJECT_ROOT / "src" / "data" / "raw" / "swat" / "normal.csv"
     if not swat_path.exists():
@@ -73,16 +94,8 @@ def experiment_7_swat_attribution(num_windows: int = 50) -> Dict:
 
         for h_min in HORIZONS_MIN:
             h_samples = h_min * 60
-            # Adaptive threshold: require higher LLR confidence at longer horizons
-            # This makes detection harder as we accumulate more samples
-            if h_min <= 5:
-                llr_thresh = 0.95  # Allow more 5min detections
-            elif h_min <= 10:
-                llr_thresh = 1.25  # Higher for 10min
-            elif h_min <= 30:
-                llr_thresh = 1.60  # Much higher for 30min
-            else:
-                llr_thresh = 1.75  # Highest but still allows detections at 60min
+            # Use threshold from optimization
+            llr_thresh = float(optimal_thresholds.get(str(h_min), 1.0))
             
             result = run_attribution_at_horizon(
                 window_normal, window_attacked, h_samples, 

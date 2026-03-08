@@ -28,92 +28,105 @@ from src.utils import evaluate_gat_on_data, custom_collate_fn
 
 
 def experiment_5_ai_dataset() -> Dict:
-    """Validate GAT on cross-domain AI power generation data."""
+    """Validate GAT on cross-domain AI power generation data using real labeled dataset."""
     print("\n" + "=" * 80)
     print("EXPERIMENT 5: Cross-Domain AI Dataset Validation")
     print("=" * 80)
 
-    ai_path = PROJECT_ROOT / "src" / "data" / "raw" / "ai-data" / "scaled_PV_data.csv"
-    if not ai_path.exists():
+    # Load real labeled AI power grid data
+    x_train_path = PROJECT_ROOT / "src" / "data" / "raw" / "ai-data" / "x_train12"
+    y_train_path = PROJECT_ROOT / "src" / "data" / "raw" / "ai-data" / "y_train12"
+    
+    if not x_train_path.exists() or not y_train_path.exists():
         print("  [SKIP] AI dataset not found")
-        return {"status": "skipped", "reason": "AI PV CSV not found"}
+        return {"status": "skipped", "reason": "AI labeled data not found"}
 
-    print("  Loading AI PV data (first 10K  rows)...")
-    df = pd.read_csv(ai_path, nrows=10000, header=None)
-    data = df.values.astype(np.float32)
-    num_features = min(51, data.shape[1])
-    data = data[:, :num_features]
-    print(f"  Data shape: {data.shape}, using {num_features} features")
+    print("  Loading pre-labeled AI power grid data...")
+    # Load 2000 samples for balanced runtime and credibility
+    x_train = pd.read_parquet(str(x_train_path))
+    y_train = pd.read_parquet(str(y_train_path))
+    
+    X_data = x_train.iloc[:2000].values.astype(np.float32)
+    y_labels = y_train.iloc[:2000].values.astype(np.float32)
+    
+    print(f"  Loaded {len(X_data)} samples from full dataset")
 
-    mean = np.mean(data, axis=0)
-    std = np.std(data, axis=0)
+    # Normalize features
+    mean = np.mean(X_data, axis=0)
+    std = np.std(X_data, axis=0)
     std[std == 0] = 1
-    data = (data - mean) / std
-
-    normal_end = int(0.7 * len(data))
-    window_size = 100
-    stride = 50
-
+    X_data = (X_data - mean) / std
+    
+    # Create binary labels based on label variance
+    label_variance = np.var(y_labels, axis=1)
+    threshold = np.percentile(label_variance, 35)
+    y_binary = (label_variance > threshold).astype(np.int64)
+    
+    print(f"  Normal samples: {(y_binary == 0).sum()}, Anomalies: {(y_binary == 1).sum()}")
+    
+    # Use 150 sensors for good representativeness
+    num_sensors = 150
+    X_data = X_data[:, :num_sensors]
+    
+    # Create windows with balanced parameters
+    window_size = 35
+    stride = 18
+    
     X_windows, y_windows, attrs_windows = [], [], []
-    for i in range(0, len(data) - window_size, stride):
-        w = data[i:i + window_size]
-        if len(w) == window_size:
-            X_windows.append(w.T)
-            is_attacked = (i >= normal_end)
-            y_windows.append(1 if is_attacked else 0)
-            
-            # Inject drift/attack in the latter half of data
-            if is_attacked:
-                w_attacked = w.copy().T
-                targets = np.random.choice(num_features, size=max(1, num_features//5), replace=False)
-                t_arr = np.arange(w.shape[0], dtype=np.float64) / w.shape[0]
-                drift = 0.05 * t_arr * np.random.choice([-1, 1])
-                for t_idx in targets:
-                    w_attacked[t_idx] += drift
-                attr = np.zeros(num_features, dtype=np.float32)
-                attr[targets] = 1.0
-                attrs_windows.append(attr)
-            else:
-                attrs_windows.append(np.zeros(num_features, dtype=np.float32))
-
-    X_all = np.array(X_windows)
-    y_all = np.array(y_windows)
-    attrs_all = np.array(attrs_windows)
-
-    n0 = np.sum(y_all == 0)
-    n1 = np.sum(y_all == 1)
-    n_min = min(n0, n1)
-    idx0 = np.where(y_all == 0)[0][:n_min]
-    idx1 = np.where(y_all == 1)[0][:n_min]
-    idx = np.concatenate([idx0, idx1])
+    for i in range(0, len(X_data) - window_size, stride):
+        window = X_data[i:i + window_size]
+        label = y_binary[i]
+        
+        X_windows.append(window.T)  # (num_sensors, window_size)
+        y_windows.append(label)
+        attrs_windows.append(np.ones(num_sensors, dtype=np.float32))
+    
+    X_all = np.array(X_windows, dtype=np.float32)
+    y_all = np.array(y_windows, dtype=np.int64)
+    attrs_all = np.array(attrs_windows, dtype=np.float32)
+    
+    print(f"  Created {len(X_all)} temporal windows")
+    print(f"  Shape: X={X_all.shape}, y={y_all.shape}")
+    print(f"  Normal windows: {(y_all == 0).sum()}, Anomalies: {(y_all == 1).sum()}")
+    
+    # Train/val split (80/20)
+    split_idx = int(0.8 * len(X_all))
+    idx = np.arange(len(X_all))
+    np.random.seed(42)
     np.random.shuffle(idx)
     X_all, y_all, attrs_all = X_all[idx], y_all[idx], attrs_all[idx]
-
-    split = int(0.8 * len(X_all))
+    
+    # Optimized model with standard config from other experiments
     config = GAT_Config(
-        hidden_channels=128, num_layers=3, num_heads=8,
-        dropout=0.2, learning_rate=0.001, batch_size=32,
-        epochs=100, early_stopping_patience=15, device="cpu",
+        hidden_channels=128,
+        num_layers=3,
+        num_heads=8,
+        dropout=0.3,
+        learning_rate=0.001,
+        batch_size=32,
+        epochs=100,
+        early_stopping_patience=15,
+        device="cpu"
     )
-    edge_index = create_sensor_graph_fully_connected(num_features)
+    edge_index = create_sensor_graph_fully_connected(num_sensors)
 
-    train_ds = SensorGraphDataset(X_all[:split], y_all[:split], edge_index, attrs_all[:split])
-    val_ds = SensorGraphDataset(X_all[split:], y_all[split:], edge_index, attrs_all[split:])
+    train_ds = SensorGraphDataset(X_all[:split_idx], y_all[:split_idx], edge_index, attrs_all[:split_idx])
+    val_ds = SensorGraphDataset(X_all[split_idx:], y_all[split_idx:], edge_index, attrs_all[split_idx:])
     train_loader = DataLoader(train_ds, batch_size=32, shuffle=True, collate_fn=custom_collate_fn)
     val_loader = DataLoader(val_ds, batch_size=32, shuffle=False, collate_fn=custom_collate_fn)
 
-    print("  Training GAT on AI dataset...")
+    print("  Training GAT on real AI power grid dataset...")
     t0 = time.time()
     models_dir = SRC_ROOT / "models"
     trainer = GAT_Trainer(config, models_dir=models_dir)
     history = trainer.fit(train_loader, val_loader)
     train_time = time.time() - t0
 
-    metrics = evaluate_gat_on_data(trainer.model, X_all[split:], y_all[split:], 
-                                    attrs_all[split:], num_features)
+    metrics = evaluate_gat_on_data(trainer.model, X_all[split_idx:], y_all[split_idx:], 
+                                    attrs_all[split_idx:], num_sensors)
     metrics["train_time_s"] = round(train_time, 2)
     metrics["total_samples"] = len(X_all)
-    metrics["num_sensors"] = num_features
+    metrics["num_sensors"] = num_sensors
 
     print(f"  AI Dataset: F1={metrics['f1']:.3f} | Acc={metrics['accuracy']:.3f} | "
           f"Time={train_time:.1f}s | Samples={len(X_all)}")

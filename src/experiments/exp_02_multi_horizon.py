@@ -8,6 +8,7 @@ using VGR+SCD+LLR on synthetic linear Byzantine drift.
 """
 
 import sys
+import json
 import numpy as np
 from pathlib import Path
 from typing import Dict
@@ -25,6 +26,23 @@ def experiment_2_multi_horizon(num_windows: int = 40) -> Dict:
     print("\n" + "=" * 80)
     print("EXPERIMENT 2: Multi-Horizon Attribution Accuracy")
     print("=" * 80)
+
+    # Load optimized threshold from JSON
+    threshold_path = SRC_ROOT / "threshold_optimization" / "exp_02" / "exp_02_threshold.json"
+    if not threshold_path.exists():
+        print(f"  [ERROR] Threshold file not found: {threshold_path}")
+        return {"status": "error", "reason": "Threshold file not found"}
+    
+    with open(threshold_path, 'r') as f:
+        threshold_config = json.load(f)
+    
+    llr_threshold = threshold_config.get("optimal_threshold")
+    if llr_threshold is None:
+        print("  [ERROR] No optimal_threshold in config")
+        return {"status": "error", "reason": "No threshold in config"}
+    
+    print(f"  Using LLR threshold from: {threshold_path}")
+    print(f"  τ = {llr_threshold:.4f}")
 
     NUM_NODES = 5
     HORIZONS_MIN = [5, 10, 30, 60]
@@ -64,7 +82,10 @@ def experiment_2_multi_horizon(num_windows: int = 40) -> Dict:
 
         for h_min in HORIZONS_MIN:
             h_samples = h_min * 60 * SAMPLING_HZ
-            result = run_attribution_at_horizon(window_normal, window_attacked, h_samples)
+            result = run_attribution_at_horizon(
+                window_normal, window_attacked, h_samples,
+                llr_threshold=llr_threshold
+            )
             results_by_horizon[h_min].append(result)
 
     summary = {}
