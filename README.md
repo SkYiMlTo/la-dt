@@ -34,6 +34,11 @@ LA-DT/
 │   │       ├── swat/                # SWAT industrial dataset
 │   │       ├── ai-data/             # AI power grid dataset
 │   │       └── bearings/            # NASA bearings dataset
+│   ├── threshold_optimization/      # LLR threshold optimization (k-fold CV)
+│   │   ├── run_optimization.py      # K-fold CV threshold optimization
+│   │   ├── data_generator.py        # Synthetic Byzantine attack data
+│   │   ├── optimal_thresholds.json  # Generated optimal thresholds
+│   │   └── README.md                # Methodology documentation
 │   ├── experiments/                 # Experiment implementations
 │   │   ├── exp_01_attack_robustness.py
 │   │   ├── exp_02_multi_horizon.py
@@ -77,7 +82,7 @@ LA-DT/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/SkYiMlTo/la-dt.git
 cd LA-DT
 
 # Create virtual environment
@@ -100,7 +105,7 @@ pip install -r requirements.txt
 ### 4. Verify Installation
 
 ```bash
-python -c "import torch; import numpy as np; print(f'✓ PyTorch {torch.__version__}, NumPy {np.__version__}')"
+python -c "import torch; import numpy as np; print(f'PyTorch {torch.__version__}, NumPy {np.__version__}')"
 ```
 
 ---
@@ -132,6 +137,28 @@ python -m src.experiments.main_run_all_experiments 3 4
 # Run experiments 4, 5, 6, 7 (Real-world and attribution)
 python -m src.experiments.main_run_all_experiments 4 5 6 7
 ```
+
+### Threshold Optimization (Separate Module)
+
+The threshold optimization for LLR (Log-Likelihood Ratio) detection is implemented as independent modules that can be run separately:
+
+```bash
+# Run all optimizers (Exp 2 and Exp 7)
+python -m src.threshold_optimization.run_all_optimizers
+
+# Or run individual experiment optimizers:
+# Exp 2 (Multi-Horizon Attribution)
+python -m src.threshold_optimization.exp_02.run_optimization
+
+# Exp 7 (SWAT Attribution)
+python -m src.threshold_optimization.exp_07.run_optimization
+```
+
+This generates optimal thresholds and saves them to respective JSON files:
+- `src/threshold_optimization/exp_02/exp_02_threshold.json`
+- `src/threshold_optimization/exp_07/exp_07_thresholds.json`
+
+These thresholds are then used by the attribution pipeline during experiments.
 
 ### Experiment Details
 
