@@ -124,19 +124,19 @@
     "num_sensors": 51
   },
   "experiment_5_ai": {
-    "precision": 0.5217,
+    "precision": 0.85,
     "recall": 1.0,
-    "f1": 0.6857,
-    "accuracy": 0.5417,
-    "tp": 12,
-    "fp": 11,
+    "f1": 0.9189,
+    "accuracy": 0.8636,
+    "tp": 17,
+    "fp": 3,
     "fn": 0,
-    "tn": 1,
+    "tn": 2,
     "attribution_acc": 0.8268,
-    "num_samples": 24,
-    "train_time_s": 91.35,
-    "total_samples": 116,
-    "num_sensors": 51
+    "num_samples": 22,
+    "train_time_s": 1035.15,
+    "total_samples": 110,
+    "num_sensors": 150
   },
   "experiment_6_ablation": {
     "Full_LA-DT": {
